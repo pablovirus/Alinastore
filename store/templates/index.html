@@ -1,0 +1,47 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+{% load static %}
+<div class="banner-agile">
+	<div class="container">
+		<h2>BIENVENIDOS A</h2>
+		<h3>ALINA <span>STORE</span></h3>
+		<p>Suspendisse sed tellus id libero pretium interdum. Suspendisse potenti. Quisque consectetur elit sit amet vehicula tristique. </p>
+		<a href="{% url 'productos' %}">VER CATALOGO</a>
+	</div>
+</div>
+<!-- TODO fix links -->
+<div class="banner-bootom-w3-agileits">
+	<div class="container">
+		<div class="col-md-5 bb-grids bb-left-agileits-w3layouts">
+			<a href="{% url 'categoria' slug='bolsos' %}"><div class="bb-left-agileits-w3layouts-inner">
+					<h3>BOLSOS</h3>
+					<!-- <h4>upto<span>75%</span></h4> -->
+			</div></a>
+		</div>
+		<div class="col-md-4 bb-grids bb-middle-agileits-w3layouts">
+			<a href="{% url 'categoria' slug='bandoleras' %}"><div class="bb-middle-top">
+				<h3>BANDOLERAS</h3>
+				<!-- <h4>upto<span>55%</span></h4> -->
+			</div></a>
+			<a href="{% url 'categoria' slug='rinoneras' %}"><div class="bb-middle-bottom">
+				<h3>RIÑONERAS</h3>
+				<!-- <h4>upto<span>65%</span></h4> -->
+			</div></a>
+		</div>
+		<div class="col-md-3 bb-grids bb-right-agileits-w3layouts">
+			<a href="{% url 'categoria' slug='billeteras' %}"><div class="bb-right-top">
+				<h3>BILLETERAS</h3>
+				<!-- <h4>upto<span>50%</span></h4> -->
+			</div></a>
+			<a href="{% url 'categoria' slug='sobres' %}"><div class="bb-right-bottom">
+				<h3>SOBRES</h3>
+				<!-- <h4>upto<span>60%</span></h4> -->
+			</div></a>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends 'base_generic.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<body>
+<div class="sub-banner empty-cart"> <!--TODO fix this image, looks bad-->
+	<span>¡Enviános tu mensaje!</span>
+</div>
+<div class="contact">
+	<div class="container">
+		<div class="col-md-3 col-sm-3 contact-left">
+			<div class="address">
+				<h4>DIRECCIÓN</h4>
+				<h5>Salta 605,</h5>
+				<h5>Mar del Plata </h5>
+				<h5>Buenos Aires, Argentina</h5>
+			</div>
+			<div class="phone">
+				<h4>TELÉFONO</h4>
+				<h5>+54 (2230) 9876 543</h5>
+				<h5>+54 (223) 1234 567</h5>
+			</div>
+			<div class="email">
+				<h4>EMAIL</h4>
+				<h5><a href="mailto:alinastore.ar@gmail.com">alinastore.ar@gmail.com</a></h5>
+				<h5><a href="mailto:alinabymaga.ar@gmail.com">alinabymaga.ar@gmail.com</a></h5>
+			</div>
+		</div>
+		<div class="col-md-9 col-sm-9 contact-right">
+			<form action="#" method="post">
+				{% csrf_token %}
+				{{ form.name }}
+				{% if form.name.errors %}
+					{% for error in form.name.errors %}
+					<span class="error">{{ error|escape }}</span>
+					{% endfor %}
+				{% endif %}
+
+				{{ form.telephone }}
+				{% if form.telephone.errors %}
+					{% for error in form.telephone.errors %}
+					<span class="error">{{ error|escape }}</span>
+					{% endfor %}
+				{% endif %}
+
+				{{ form.email }}
+				{% if form.email.errors %}
+					{% for error in form.email.errors %}
+					<span class="error">{{ error|escape }}</span>
+					{% endfor %}
+				{% endif %}
+
+				{{ form.subject }}
+				{% if form.subject.errors %}
+					{% for error in form.subject.errors %}
+					<span class="error">{{ error|escape }}</span>
+					{% endfor %}
+				{% endif %}
+
+				{{ form.comment }}
+				{% if form.comment.errors %}
+					{% for error in form.comment.errors %}
+					<span class="error">{{ error|escape }}</span>
+					{% endfor %}
+				{% endif %}
+
+
+				<!-- <input type="text" name="your name" placeholder="Tu nombre" required=" ">
+				<input type="text" name="your email" placeholder="Tu email" required=" ">
+				<input type="text" name="your phone number" placeholder="Tu teléfono" required=" ">
+				<input type="text" name="your subject" placeholder="Tema del mensaje" required=" ">
+				<textarea name="your message" placeholder="Tu mensaje" required=" "></textarea> -->
+				<input type="submit" value="Enviar &#10084">
+			</form>
+		</div>
+	</div>
+</div>
+<div class="map-w3ls">
+		<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3144.568296384893!2d-57.5491088487792!3d-37.98720295166177!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9584dbf92f89b2b5%3A0x7975be88a1ec5c4e!2sSalta%20626%2C%20B7600DEN%20Mar%20del%20Plata%2C%20Provincia%20de%20Buenos%20Aires!5e0!3m2!1sen!2sar!4v1656537861188!5m2!1sen!2sar" allowfullscreen></iframe>
+</div>
+
+{% endblock %}

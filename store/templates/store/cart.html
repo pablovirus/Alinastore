@@ -1,0 +1,201 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+{% load static %}
+
+
+<div class="mt-5 pt-4">
+	{% if messages %}
+	{% for message in messages %}
+	<div class="alert alert-{{ message.tags }} alert-dismissible fade in" role="alert">
+		{{ message }}
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		  <span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	{% endfor %}
+	{% endif %}
+</div>
+
+{% if order_products %}
+<div class="container h-100 py-5">
+  <div class="row d-flex justify-content-center align-items-center h-100">
+    <div class="col">
+      <div class="table-responsive">
+        <table class="table" style="background-color: rgba(181, 181, 181, 0.238);">
+        <thead>
+            <tr>
+            <th scope="col"></th>
+            <th scope="col" style="width: 20%;">PRODUCTO</th> 
+            <th scope="col" style="width: 20%;">CANTIDAD</th>
+            <th scope="col" style="width: 20%;">PRECIO</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order_product in order_products %}
+            <tr>
+            <th scope="row" class="table-img">
+                <div class="d-flex center-table">
+                    <a href="{{ order_product.item.get_absolute_url }}">
+                        <img src="{{ order_product.item.primary_image.url }}" class="img-fluid rounded-3"
+                            alt="Producto">
+                    </a>
+            </th>
+            <th scope="row" class="table-data">
+                <div class="flex-column ms-4">
+                    <p class="mb-2">{{ order_product.item.name }}</p>
+                </div>
+                </div>
+            </th>   
+            <td class="table-data align-middle" >
+                <p class="mb-0" style="font-weight: 500;">{{ order_product.quantity }}
+                  <a href="{{ order_product.get_increase_url }}" class="increase-btn">&#129093</a>
+                  <a href="{{ order_product.get_decrease_url }}" class="increase-btn">&#129095</a>
+                </p>
+            </td>
+            <td class="align-middle table-data">
+                <p class="mb-0" style="font-weight: 500;">{{ order_product.item.price }}</p>
+            </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    </div>
+
+    <div class="card shadow-2-strong mb-5 mb-lg-0" style="border-radius: 16px;">
+        <div class="card-body p-4">
+        
+            <form action="{% url 'carrito' %}" method="post">
+                {% csrf_token %}
+
+                {% if field.errors %}
+                <ul>
+                  {% for error in field.errors %}
+                    <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
+                {% endif %}
+
+                <div class="col-md-4 col-lg-4 col-xl-4">
+                    <div class="row">
+                        <div class="col-12 col-xl-6">
+                            <div class="form-outline mb-4 mb-xl-5">
+                                <label class="form-label" for="{{ pedidoform.name.auto_id }}">{{ pedidoform.name.label }}</label>
+                                {{ pedidoform.name }}
+                                {% if pedidoform.name.errors %}
+                                  {% for error in pedidoform.name.errors %}
+                                    <span class="error">{{ error|escape }}</span>
+                                  {% endfor %}
+                                {% endif %}
+                            </div>
+                            <div class="form-outline mb-4 mb-xl-5">
+                                <label class="form-label" for="{{ pedidoform.telephone.auto_id }}">{{ pedidoform.telephone.label }}</label>
+                                {{ pedidoform.telephone }}
+                                {% if pedidoform.telephone.errors %}
+                                {% for error in pedidoform.telephone.errors %}
+                                    <span class="error">{{ error|escape }}</span>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-12 col-xl-6">
+                            <div class="form-outline mb-4 mb-xl-5">
+                                <label class="form-label" for="{{ pedidoform.email.auto_id }}">{{ pedidoform.email.label }}</label>
+                                {{ pedidoform.email }}
+                                {% if pedidoform.email.errors %}
+                                  {% for error in pedidoform.email.errors %}
+                                     <span class="error">{{ error|escape }}</span>
+                                  {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-8 col-lg-8 col-xl-8">
+                    <div class="col-12 col-xl-12">
+                        <div class="form-outline mb-8 mb-xl-8">
+                            <label class="form-label" for="{{ pedidoform.comment.auto_id }}">{{ pedidoform.comment.label }}</label>
+                            {{ pedidoform.comment }}
+                            {% if pedidoform.comment.errors %}
+                            {% for error in pedidoform.comment.errors %}
+                               <span class="error">{{ error|escape }}</span>
+                            {% endfor %}
+                          {% endif %}
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block btn-lg">
+                        <div class="d-flex justify-content-between">
+                        <span style="margin-right: 10px;">¡Enviar pedido!</span>
+                        <span>{{total_cost}}</span>
+                        </div>
+                    </button>
+                </div>
+
+            </form>
+        
+        </div>
+    </div>
+
+    <!-- <div class="card shadow-2-strong mb-5 mb-lg-0" style="border-radius: 16px;">
+        <div class="card-body p-4">
+            <form action="{% url 'carrito' %}" method="post">
+                {% csrf_token %}
+                <div class="col-md-6 col-lg-6 col-xl-6">
+                    <div class="row">
+                        <div class="col-12 col-xl-6">
+                            <div class="form-outline mb-4 mb-xl-5">
+                                <label class="form-label" for="typeName">Tu nombre</label>
+                                <input type="text" id="typeName" class="form-control form-control-lg"
+                                 size="17" placeholder="Magali Alliana" />
+                            </div>
+                            <div class="form-outline mb-4 mb-xl-5">
+                                <label class="form-label" for="typeTel">Tu teléfono</label>
+                                <input type="text" id="typeTel" class="form-control form-control-lg"
+                                id="tel" minlength="7" maxlength="20" placeholder="2234556666"/>
+                            </div>
+                        </div>
+                        <div class="col-12 col-xl-6">
+                            <div class="form-outline mb-4 mb-xl-5">
+                                <label class="form-label" for="typeEmail">Tu email</label>
+                                <input type="text" id="typeEmail" class="form-control form-control-lg" size="17"
+                                placeholder="tucorreo@mail.com" maxlength="200" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-6">
+                    <div class="col-12 col-xl-12">
+                        <div class="form-outline mb-8 mb-xl-8">
+                            <label class="form-label" for="typeComment">Comentario (opcional)</label>
+                            <textarea type="text" id="typeComment" class="form-control form-control-lg"
+                            rows="4" placeholder="Horario para contactar, preguntas sobre productos, etc." maxlength="2000"></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block btn-lg">
+                    <div class="d-flex justify-content-between">
+                        <span style="margin-right: 10px;">¡Enviar pedido!</span>
+                        <span>{{total_cost}}</span>
+                    </div>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div> -->
+    </div>
+  </div>
+</div>
+
+{% else %}
+<div class="sub-banner empty-cart"> <!--TODO fix this image, looks bad-->
+    <span>Tu carrito está vacío</span>
+    <!-- <div class="h-100 py-5">
+        <div class="col h-100 empty-cart">
+            Tu carrito está vacío
+        </div>
+    </div> -->
+</div>
+
+{% endif %}
+
+{% endblock %}

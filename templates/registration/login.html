@@ -1,0 +1,40 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<div class="banner-agile">
+  <div class="container">
+  
+      {% if form.errors %}
+        <p style="margin-top: 3%;"><span>Usuario y contraseña no coincidien</span></p>
+      {% endif %}
+  
+      <!-- {% if next %}
+        {% if not user.is_authenticated %}
+          <br>
+          <p><span>
+            Por favor inicie sesión</span></p>
+        {% endif %}
+      {% endif %} -->
+  
+      <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <table style="margin-top: 5%;">
+          <tr>
+            <td style="padding-bottom: 10px;"> {{ form.username.label_tag }}</td>
+            <td style="padding-bottom: 10px; padding-left: 10px; padding-right: 6px;">{{ form.username }}</td>
+          </tr>
+          <tr>
+            <td>{{ form.password.label_tag }}</td>
+            <td style="padding-left: 10px; padding-bottom: 5px;">{{ form.password }}</td>
+          </tr>
+        </table>
+        <span class="login-btn"><input type="submit" value="Ingresar" /></span>
+        <input type="hidden" name="next" value="{{ next }}" />
+      </form>
+  
+      {# Assumes you setup the password_reset view in your URLconf #}
+      <p><a href="{% url 'password_reset' %}">¿Olvidaste tu contraseña?</a></p>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+
+<div class="mt-5 pt-4">
+	{% if messages %}
+	{% for message in messages %}
+	<div class="alert alert-{{ message.tags }} alert-dismissible fade in" role="alert">
+		{{ message }}
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		  <span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	{% endfor %}
+	{% endif %}
+</div>
+
+{% load static %}
+{% load djmoney %}
+<div class="sub-banner my-banner2">
+</div>
+<div class="content">
+	<div class="container">
+		<div class="col-md-4 w3ls_dresses_grid_left">
+			<div class="w3ls_dresses_grid_left_grid">
+				<h3>Categorías</h3>
+					<div class="w3ls_dresses_grid_left_grid_sub">
+						<div class="ecommerce_dres-type">
+							<ul>
+								<li><a href="{% url 'productos' %}">Todos</a></li>
+								{% for category in categories %}
+								<li><a href="{{ category.get_absolute_url }}">{{category.name}}</a></li>
+								{% endfor %}
+							</ul>
+						</div>
+					</div>
+			</div>
+		</div>
+		<div class="col-md-8 col-sm-8 women-dresses">
+			<!--Set of Three Products-->
+			{% for row in product_rows %}
+			<div class="women-set1">
+				{% for product in row %}
+				<!-- Individual Product -->
+				<div class="col-md-4 women-grids wp1 animated wow slideInUp" data-wow-delay=".5s">
+					<a href="{{ product.get_absolute_url }}"><div class="product-img">
+						{% if product.primary_image %}
+						<div class="center-img"><img src="{{ product.primary_image.url }}" alt="" /></div>
+						{% else %}
+						<img src="{% static 'images/wp4.jpg' %}" alt="" />
+						{% endif %}
+						<div class="p-mask">
+							<form action="{{ product.get_add_to_cart_from_product_list_url }}" method="post">
+								{% csrf_token %}
+								<!-- <input type="hidden" name="cmd" value="_cart" />
+								<input type="hidden" name="add" value="1" /> 
+								<input type="hidden" name="w3ls1_item" value="{{ product.name }}" /> 
+								<input type="hidden" name="amount" value="{{ product.price }}" />  -->
+								<button type="submit" class="w3ls-cart pw3ls-cart"><i class="fa fa-cart-plus" aria-hidden="true"></i> Agregar al carrito</button>
+							</form>
+						</div>
+					</div></a>
+					<h4>{{ product.name }}</h4>
+					{% if product.discount_price %}
+					<h5>{% money_localize product.discount_price %}
+					<span class="discounted-price">{% money_localize product.price %}</span></h5>
+					{% else %}
+					<h5>{% money_localize product.price %}</h5>
+					{% endif %}
+				</div>
+				{% endfor %}
+				<div class="clearfix"></div>
+			</div> <!-- end of set of three-->
+			{% endfor %}
+		</div>
+	</div>
+</div>
+{% endblock %}

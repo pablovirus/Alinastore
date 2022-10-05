@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% load static %}
+<title>ALINA Store</title>
+<link rel="icon" type="image/png" href="{% static 'images/icons/ALINA_webicon.png' %}">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Fashion Club Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" /> <!--TODO edit keywords-->
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- css -->
+<link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css" media="all" />
+<link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" media="all" />
+<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" type="text/css" media="all" />
+<!--// css -->
+<!-- font -->
+<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
+<link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+<!-- //font -->
+<script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.js' %}"></script>
+<script type="text/javascript">
+	// script to get device id (for anonymous cart functionality)
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+          const cookies = document.cookie.split(';');
+          for (let i = 0; i < cookies.length; i++) {
+              const cookie = cookies[i].trim();
+              // Does this cookie string begin with the name we want?
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+     }
+    
+    function uuidv4() {
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
+    }
+
+    let device = getCookie('device')
+    if (device == null || device == undefined) {
+      device = uuidv4()
+    }
+
+    document.cookie = 'device=' + device + ";domain=;path=/"
+  </script>
+{% block head %}
+
+{% endblock %}
+
+</head>
+
+<body>
+<div class="header-top-w3layouts">
+	<div class="container">
+		<div class="col-md-6 logo-w3">
+			<a href="{% url 'index' %}"><img src="{% static 'images/alina_logo_2_small.png' %}" alt=" " /><h1> <span>      </span></h1></a>
+		</div>
+		<div class="col-md-6 phone-w3l">
+			<ul>
+				<li>&#128222 +54-9-2234489134</li>
+			</ul>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+</div>
+<div class="header-bottom-w3ls">
+	<div class="container">
+		<div class="col-md-7 navigation-agileits">
+			<nav class="navbar navbar-default">
+				<div class="navbar-header nav_2">
+					<button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+				</div> 
+				<div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+					<ul class="nav navbar-nav ">
+						<li class="hyper"><a href="{% url 'index' %}" class="hyper "><span>INICIO</span></a></li>	
+						<li class="dropdown">
+							<a href="{% url 'productos' %}" class="dropdown-toggle hyper" data-toggle="dropdown" ><span>PRODUCTOS<b class="caret"></b></span></a>
+								<ul class="dropdown-menu multi">
+									<div class="row">
+										{% for row in categories_rows %}
+										<div class="col-sm-4">										
+											<ul class="multi-column-dropdown">
+												{% for category in row %}
+												<li><a href="{{ category.get_absolute_url }}"><i class="fa fa-angle-right" aria-hidden="true"></i>{{ category.name }}</a></li>
+												{% endfor %}
+											</ul>	
+										</div>
+										{% endfor %}	
+										<div class="col-sm-4 w3l">
+											<a href="{% url 'productos' %}"><img src="{% static 'images/menu1.jpg' %}" class="img-responsive" alt=""></a>
+										</div>
+										<div class="clearfix"></div>
+									</div>	
+								</ul>
+						</li>
+						<li><a href="{% url 'about' %}" class="hyper"><span>SOBRE NOSOTRAS</span></a></li>
+						<li><a href="{% url 'contacto' %}" class="hyper"><span>CONTACTO</span></a></li>
+						<li><a href="{% url 'carrito' %}"><span>CARRITO</span></a></li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+								<script>
+				$(document).ready(function(){
+					$(".dropdown").hover(            
+						function() {
+							$('.dropdown-menu', this).stop( true, true ).slideDown("fast");
+							$(this).toggleClass('open');        
+						},
+						function() {
+							$('.dropdown-menu', this).stop( true, true ).slideUp("fast");
+							$(this).toggleClass('open');       
+						}
+					);
+				});
+				</script>
+		<div class="col-md-4 search-agileinfo">
+			<form action="#" method="post">
+				{% csrf_token %}
+				<input type="search" name="Search" placeholder="Buscar un producto..." required="">
+				<button type="submit" class="btn btn-default search" aria-label="Left Align">
+					<i class="fa fa-search" aria-hidden="true"> </i>
+				</button>
+			</form>
+		</div>
+		<div class="col-md-1 cart-wthree">
+			<a href="{% url 'carrito' %}" class="agile-icon"><i class="fa fa-shopping-cart">
+			</i>
+			</a>
+			<!-- <div class="cart"> 
+				<form action="#" method="post" class="last"> 
+					<input type="hidden" name="cmd" value="_cart" />
+					<input type="hidden" name="display" value="1" />
+					<button class="w3view-cart" type="submit" name="submit" value=""><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></button>
+				</form>  
+			</div> -->
+		</div>
+		<div class="clearfix"></div>
+	</div>
+</div>
+
+{% block content %}
+
+{% endblock %}
+
+<div class="footer">
+	<div class="container">
+		<div class="col-md-3 footer-grids fgd1">
+		<a href="{% url 'index' %}"><img src="{% static 'images/alina_logo_1_small.png' %}" alt=" " /><h3>&#8203<span>     </span></h3></a>
+		<ul>
+			<li>Mar del Plata</li>
+			<li>Buenos Aires, Argentina</li>
+			<li><a href="mailto:alinastore.ar@gmail.com">alinastore.ar@gmail.com</a></li>
+			<a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+			<a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+			<a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+			<a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+		</ul>
+		</div>
+		<!-- <div class="col-md-3 footer-grids fgd2">
+			<h4>Información</h4> 
+			<ul>
+				<li><a href="contact.html">Contact Us</a></li>
+				<li><a href="icons.html">Web Icons</a></li>
+				<li><a href="typography.html">Typography</a></li>
+				<li><a href="faq.html">FAQ's</a></li>
+			</ul>
+		</div> -->
+		<!-- <div class="col-md-3 footer-grids fgd3">
+			<h4>Shop</h4> 
+			<ul>
+				<li><a href="jewellery.html">Jewellery</a></li>
+				<li><a href="cosmetics.html">Cosmetics</a></li>
+				<li><a href="Shoes.html">Shoes</a></li>
+				<li><a href="deos.html">Deos</a></li>
+			</ul>
+		</div> -->
+		<div class="col-md-3 footer-grids fgd4">
+			<h4>Mi cuenta</h4> 
+			<ul>
+				{% if not user.is_authenticated %}
+				<li><a href="{% url 'login'%}?next={{request.path}}">Iniciar sesión</a></li>
+				<li><a href="{% url 'register' %}">Registarme</a></li>
+				{% else %}
+				<li><a href="{% url 'logout'%}">Cerrar sesión</a></li>
+				<li><a href="#">Mis datos</a></li>
+				<!-- <li><a href="recommended.html">Recommended </a></li> -->
+				<li><a href="{% url 'pedidos' %}">Pedidos</a></li> 
+				<!-- TODO: fix the above urls -->
+				{% endif %}
+			</ul>
+		</div>
+		<div class="clearfix"></div>
+		<!-- <p class="copy-right">© 2016 Fashion Club. All rights reserved | Design by <a href="http://w3layouts.com"> W3layouts.</a></p> -->
+	</div>
+</div>
+	
+	<!-- cart-js -->
+	<script src="{% static 'js/minicart.js' %}"></script>
+	<script>
+        w3ls1.render();
+
+        w3ls1.cart.on('w3sb1_checkout', function (evt) {
+        	var items, len, i;
+
+        	if (this.subtotal() > 0) {
+        		items = this.items();
+
+        		for (i = 0, len = items.length; i < len; i++) {
+        			items[i].set('shipping', 0);
+        			items[i].set('shipping2', 0);
+        		}
+        	}
+        });
+    </script>
+	<!-- //cart-js -->  
+	<script src="{% static 'js/scroll.position.js' %}"></script>
+</body>
+</html>

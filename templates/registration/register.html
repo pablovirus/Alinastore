@@ -1,0 +1,68 @@
+{% extends "base_generic.html" %}
+{% load static %}
+{% block content %}
+
+<body>
+    <div class="register-banner-parent">
+        <div class="register-banner empty-cart"> <!--TODO fix this image, looks bad-->
+            <span>¡Creá una cuenta en ALINA!</span>
+        </div>
+    </div>
+    <div class="contact">
+        <div class="container">
+            <div class="col-md-12 col-sm-12 contact-right">
+                <form class="user-create-form" action="{% url 'register' %}" method="post">
+                    {% csrf_token %}
+                    <p>
+                        <label class="form-label register-form-label" for="{{ form.username.auto_id }}">{{ form.username.label }}</label>
+                        {{ form.username }}
+                        {% if form.username.errors %}
+                        {% for error in form.username.errors %}
+                            <span class="error">{{ error|escape }}</span>
+                        {% endfor %}
+                        {% endif %}
+                    </p>
+                    <p>
+                        <label class="form-label register-form-label" for="{{ form.email.auto_id }}">{{ form.email.label }}</label>
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                        {% for error in form.email.errors %}
+                            <span class="error">{{ error|escape }}</span>
+                        {% endfor %}
+                        {% endif %}
+                    </p>
+                    <p>
+                        <label class="form-label register-form-label" for="{{ form.password1.auto_id }}">{{ form.password1.label }}</label>
+                        {{ form.password1 }}
+                        {% if form.password1.errors %}
+                        {% for error in form.password1.errors %}
+                            <span class="error">{{ error|escape }}</span>
+                        {% endfor %}
+                        {% endif %}
+                    </p>
+                    <p>
+                        <label class="form-label register-form-label" for="{{ form.password2.auto_id }}">{{ form.password2.label }}</label>
+                        {{ form.password2 }}
+                        {% if form.password2.errors %}
+                        {% for error in form.password2.errors %}
+                            <span class="error">{{ error|escape }}</span>
+                        {% endfor %}
+                        {% endif %}
+                    </p>
+                    <p>
+                        <label class="form-label register-form-label" for="{{ form.telephone.auto_id }}">{{ form.telephone.label }}</label>
+                        {{ form.telephone }}
+                        {% if form.telephone.errors %}
+                        {% for error in form.telephone.errors %}
+                            <span class="error">{{ error|escape }}</span>
+                        {% endfor %}
+                        {% endif %}
+                    </p>
+                    <p><input type="submit" style="margin-left: 20%;" value="Crear cuenta &#10084"></p>
+                    <p style="margin-left: 20%;">¿Ya tenés una cuenta? Entonces podés <a href="{% url 'login' %}">iniciar sesión</a></p>
+                </form>
+            </div>
+        </div>
+    </div>   
+
+{% endblock %}
